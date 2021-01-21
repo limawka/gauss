@@ -33,17 +33,21 @@ int eliminate(Matrix *mat, Matrix *b){
 
 	for(i = 0; i < n; i++){
 		// szukanie elementu glownego
-		for(j = i; j < n; j++){
+		j = i;
+		while(j < n){
 			if(fabs(mat->data[j][i]) > max){
 				max = fabs(mat->data[j][i]);
 				max_r = j;
 			}
+			j++;
 		}
+		
 		// jezeli nie ma elementu innego niz 0, bedzie on na przekatnej - macierz osobliwa
 		if(max==0) return 1;
 
 		// zamiana wierszy
-		for(j = i; j < n+1; j++){
+		for(j = i; j < n+1; j++)
+		{
 			t = mat->data[i][j];
 			mat->data[i][j] = mat->data[max_r][j];
 			mat->data[max_r][j] = t;
