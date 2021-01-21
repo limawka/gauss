@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <math.h>
+
 #include "gauss.h"
 
 /**
@@ -19,33 +22,34 @@ int eliminate(Matrix *mat, Matrix *b){
 	*/
 	double m;
 	int i, j, k;
+	double max=0, t;
+	int max_r;
 
-	expandMatrix(mat, b);	//rozszerzamy macierz A o b
+	expandMatrix(mat, b);	// rozszerzamy macierz A o b
 
-	printToScreen(mat);
+	//printToScreen(mat);
 
 	int n = mat->r;
 
-
-	double* temp = malloc(mat->c * sizeof(double));
-	double max=0, t;
-	int max_r;
 	for(i = 0; i < n; i++){
+		// szukanie elementu glownego
 		for(j = i; j < n; j++){
-			//printf("patrze na %f i %f\n",mat->data[j][i], max);
 			if(fabs(mat->data[j][i]) > max){
 				max = fabs(mat->data[j][i]);
 				max_r = j;
 			}
 		}
-		//printf("zamieniam %d z %d:\n", i, max_r);
+		// jezeli nie ma elementu innego niz 0, bedzie on na przekatnej - macierz osobliwa
+		if(max==0) return 1;
+
+		// zamiana wierszy
 		for(j = i; j < n+1; j++){
 			t = mat->data[i][j];
 			mat->data[i][j] = mat->data[max_r][j];
 			mat->data[max_r][j] = t;
 		}
-		//printToScreen(mat);
-		//m = -mat->data [ j ][ i ] / mat->data [ i ][ i ];
+
+		// eliminacja gaussa
 		for( j = i+1; j < n; j++ )
 		{
 			m = mat->data [ j ][ i ] / mat->data [ i ][ i ];
@@ -55,8 +59,10 @@ int eliminate(Matrix *mat, Matrix *b){
 		max = 0;
 	}
 
+	if( mat->data[n-1][n-1] == 0 ) 
+		return 1;
 
-	printToScreen(mat);
+	//printToScreen(mat);
 
 	return 0;
 }
