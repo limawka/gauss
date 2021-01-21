@@ -27,16 +27,16 @@ int eliminate(Matrix *mat, Matrix *b, int* q){
 	int max_r, max_c;
 	double* tp;
 	if(mat->r != mat->c) return 2;
-
+	
 	expandMatrix(mat, b);	// rozszerzamy macierz A o b
-
+	
 	for(i = 0; i < mat->c; i++)	// uzupelnianie macierzy Q=[1,2,3...n]
 		q[i] = i;
 
 	//printToScreen(mat);
 
 	int n = mat->r;
-
+	
 	for(i = 0; i < n; i++){
 		// szukanie elementu glownego
 		for(j = i; j < n; j++){
@@ -47,8 +47,8 @@ int eliminate(Matrix *mat, Matrix *b, int* q){
 					max_c = k;
 				}
 			}
-
 		}
+
 		// jezeli nie ma elementu innego niz 0, bedzie on na przekatnej - macierz osobliwa
 		if(max==0) return 1;
 

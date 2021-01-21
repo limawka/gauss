@@ -14,18 +14,18 @@ int main(int argc, char ** argv) {
 
 	if (A == NULL) return -1;
 	if (b == NULL) return -2;
-	printToScreen(A);
-	printToScreen(b);
+
+	
 	q = malloc(A->c*sizeof(int));
 	
 	res = eliminate(A,b,q);
 
 	if(res == 1){
 		printf("Macierz osobliwa\n");
-		return 1;
+		return 0;
 	}else if(res == 2){
 		printf("Zly rozmiar macierzy A - nie jest kwadratowa!\n");
-		return 2;
+		return 0;
 	}
 	x = createMatrix(b->r, 1);
 
